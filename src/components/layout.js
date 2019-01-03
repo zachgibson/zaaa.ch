@@ -4,6 +4,63 @@ import { StaticQuery, graphql, Link } from 'gatsby'
 import { Spring } from 'react-spring'
 
 import './layout.css'
+import Work from '../components/work'
+import Experiments from '../components/experiments'
+import Writings from './writings'
+import OpenSource from './open-source'
+import JamsToWorkTo from './jams-to-work-to'
+import Home from './home'
+
+const links = [
+  {
+    title: 'zaaa.ch',
+    to: '/',
+    icon: null,
+    gridRow: '3',
+    gridColumn: '2 / 10',
+    component: <Home />,
+  },
+  {
+    title: 'Featured Work',
+    to: '/work',
+    icon: null,
+    gridRow: '6',
+    gridColumn: '5 / 11',
+    component: <Work />,
+  },
+  {
+    title: 'Experiments',
+    to: '/experiments',
+    icon: null,
+    gridRow: '9',
+    gridColumn: '3 / 10',
+    component: <Experiments />,
+  },
+  {
+    title: 'Writings',
+    to: '/writings',
+    icon: null,
+    gridRow: '4',
+    gridColumn: '3 / 10',
+    component: <Writings />,
+  },
+  {
+    title: 'Open Source',
+    to: '/open-source',
+    icon: null,
+    gridRow: '7',
+    gridColumn: '5 / 11',
+    component: <OpenSource />,
+  },
+  {
+    title: 'Jams to Work to',
+    to: '/jams-to-work-to',
+    icon: SpotifyIcon,
+    gridRow: '11',
+    gridColumn: '2 / 10',
+    component: <JamsToWorkTo />,
+  },
+]
 
 const Footer = () => (
   <footer
@@ -49,45 +106,6 @@ const SpotifyIcon = () => (
     />
   </svg>
 )
-
-const links = [
-  { title: 'zaaa.ch', to: '/', icon: null, gridRow: '3', gridColumn: '2 / 10' },
-  {
-    title: 'Featured Work',
-    to: '/work',
-    icon: null,
-    gridRow: '6',
-    gridColumn: '5 / 11',
-  },
-  {
-    title: 'Experiments',
-    to: '/experiments',
-    icon: null,
-    gridRow: '9',
-    gridColumn: '3 / 10',
-  },
-  {
-    title: 'Writings',
-    to: '/writings',
-    icon: null,
-    gridRow: '4',
-    gridColumn: '3 / 10',
-  },
-  {
-    title: 'Open Source',
-    to: '/open-source',
-    icon: null,
-    gridRow: '7',
-    gridColumn: '5 / 11',
-  },
-  {
-    title: 'Jams to Work to',
-    to: '/jams-to-work-to',
-    icon: SpotifyIcon,
-    gridRow: '11',
-    gridColumn: '2 / 10',
-  },
-]
 
 const getX = target =>
   target.getBoundingClientRect().x + target.getBoundingClientRect().width / 2
@@ -147,7 +165,6 @@ class MainLink extends React.Component {
               color: '#000',
             }}
             onMouseOver={({ target }) =>
-              console.log(target) ||
               onMouseOver(getX(target), getY(target), target)
             }
             onMouseOut={({ target }) =>
@@ -218,28 +235,33 @@ class Layout extends React.Component {
   handleMouseOver = (left, top, target) => {
     const href = target.href
     const indexOfLastSlash = href.lastIndexOf('/')
-    const hoveredPath = `/${href.substring(indexOfLastSlash + 1)}`
+    const hoveredLink = `/${href.substring(indexOfLastSlash + 1)}`
 
-    if (this.state.activePage !== hoveredPath) {
-      if (this.state.activePage === homePage && homePage === hoveredPath) {
-        this.setState({
-          scale: 1.1,
-          top: 0,
-          left: 0,
-          isHovering: true,
-        })
-      } else {
-        this.setState({
-          scale: 0.4,
-          top: (top - initialCenterY) * 2.5,
-          left: (left - initialCenterX) * 2.5,
-          isHovering: true,
-        })
+    this.setState({ hoveredLink }, () => {
+      if (this.state.activePage !== this.state.hoveredLink) {
+        if (
+          this.state.activePage === homePage &&
+          homePage === this.state.hoveredLink
+        ) {
+          this.setState({
+            scale: 1.1,
+            top: 0,
+            left: 0,
+            isHovering: true,
+          })
+        } else {
+          this.setState({
+            scale: 0.4,
+            top: (top - initialCenterY) * 2.5,
+            left: (left - initialCenterX) * 2.5,
+            isHovering: true,
+          })
+        }
       }
-    }
+    })
   }
 
-  handleMouseOut = target => {
+  handleMouseOut = (left, top, target) => {
     const { initialX, initialY } = this.state
     const homePage = '/'
     const href = target.href
@@ -266,6 +288,16 @@ class Layout extends React.Component {
       })
     }
   }
+
+  // renderHoveredComponent = link => {
+  //   console.log(link)
+  //   switch (link) {
+  //     case 'work':
+  //       return <Work />
+  //     default:
+  //       return null
+  //   }
+  // }
 
   render() {
     const { children } = this.props
@@ -360,7 +392,10 @@ class Layout extends React.Component {
                   )}
                 {this.state.isHovering && (
                   <div style={{ position: 'relative' }}>
-                    {this.state.activeLink}
+                    {
+                      links.find(({ to }) => to === this.state.hoveredLink)
+                        .component
+                    }
                   </div>
                 )}
                 {!this.state.isHovering && (

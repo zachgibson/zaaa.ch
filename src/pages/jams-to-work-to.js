@@ -3,13 +3,12 @@ import { Link } from 'gatsby'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import JamsToWorkTo from '../components/jams-to-work-to'
 
 const JamsToWorkToPage = () => (
   <Layout>
     <SEO title="const JamsToWorkTo" />
-    <h1>Hi from the const JamsToWorkTo page</h1>
-    <p>Welcome to const JamsToWorkTo page</p>
-    <Link to="/">Go back to the homepage</Link>
+    <JamsToWorkTo />
   </Layout>
 )
 
