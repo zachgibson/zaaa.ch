@@ -10,55 +10,134 @@ import Writings from './writings'
 import OpenSource from './open-source'
 import JamsToWorkTo from './jams-to-work-to'
 import Home from './home'
+import twitterLogo from '../images/twitter.png'
+import dribbbleLogo from '../images/dribbble.png'
+import githubLogo from '../images/github.png'
+import instagramLogo from '../images/instagram.png'
+import twitchLogo from '../images/twitch.png'
+import spotifyLogo from '../images/spotify.png'
 
 const links = [
   {
-    title: 'zaaa.ch',
-    to: '/',
-    icon: null,
+    content: twitterLogo,
+    width: 46,
+    height: 38,
+    to: 'https://twitter.com/zacharykeith_',
     gridRow: '3',
     gridColumn: '2 / 10',
-    component: <Home />,
+    component: null,
+    linkEnabled: true,
   },
   {
-    title: 'Featured Work',
-    to: '/work',
-    icon: null,
-    gridRow: '6',
-    gridColumn: '5 / 11',
-    component: <Work />,
-  },
-  {
-    title: 'Experiments',
-    to: '/experiments',
-    icon: null,
-    gridRow: '9',
-    gridColumn: '3 / 10',
-    component: <Experiments />,
-  },
-  {
-    title: 'Writings',
-    to: '/writings',
-    icon: null,
+    content: 'zaaa.ch',
+    width: null,
+    height: null,
+    to: '/',
     gridRow: '4',
-    gridColumn: '3 / 10',
+    gridColumn: '8 / 15',
+    component: <Home />,
+    linkEnabled: true,
+  },
+  {
+    content: 'Featured Work',
+    width: null,
+    height: null,
+    to: '/work',
+    gridRow: '9',
+    gridColumn: '2 / 11',
+    component: <Work />,
+    linkEnabled: true,
+  },
+  {
+    content: 'Experiments',
+    width: null,
+    height: null,
+    to: '/experiments',
+    gridRow: '14',
+    gridColumn: '5 / 15',
+    component: <Experiments />,
+    linkEnabled: true,
+  },
+  {
+    content: dribbbleLogo,
+    width: 42,
+    height: 42,
+    to: 'https://dribbble.com/zacharygibson',
+    gridRow: '16',
+    gridColumn: '13 / 15',
+    component: null,
+    linkEnabled: true,
+  },
+  {
+    content: githubLogo,
+    width: 60,
+    height: 50,
+    to: 'https://github.com/zachgibson',
+    gridRow: '18',
+    gridColumn: '3 / 6',
+    component: null,
+    linkEnabled: true,
+  },
+  {
+    content: instagramLogo,
+    width: 44,
+    height: 44,
+    to: 'https://instagram.com/zacharykeith_',
+    gridRow: '2',
+    gridColumn: '11 / 14',
+    component: null,
+    linkEnabled: true,
+  },
+  {
+    content: 'Writings',
+    width: null,
+    height: null,
+    to: '/writings',
+    gridRow: '4',
+    gridColumn: '4 / 10',
     component: <Writings />,
+    linkEnabled: false,
   },
   {
-    title: 'Open Source',
-    to: '/open-source',
-    icon: null,
+    content: twitchLogo,
+    width: 106.74,
+    height: 36,
+    to: 'https://www.twitch.tv/zacharykeith_',
     gridRow: '7',
-    gridColumn: '5 / 11',
-    component: <OpenSource />,
+    gridColumn: '1 / 12',
+    component: null,
+    linkEnabled: true,
   },
   {
-    title: 'Jams to Work to',
+    content: 'Open Source',
+    width: null,
+    height: null,
+    to: '/open-source',
+    gridRow: '9',
+    gridColumn: '8 / 16',
+    component: <OpenSource />,
+    linkEnabled: true,
+  },
+  {
+    content: spotifyLogo,
+    width: 46,
+    height: 46,
+    to: 'https://open.spotify.com/user/1220763445?si=HMSWJY8wQQ-SCqhlCGs8MQ',
+    gridRow: '18',
+    gridColumn: '9 / 12',
+    component: null,
+    linkEnabled: true,
+  },
+  {
+    content: 'Jams to Work to',
+    width: null,
+    height: null,
     to: '/jams-to-work-to',
     icon: SpotifyIcon,
-    gridRow: '11',
-    gridColumn: '2 / 10',
+    gridRow: '14',
+    gridColumn: '3 / 12',
     component: <JamsToWorkTo />,
+    linkEnabled: true,
   },
 ]
 
@@ -69,8 +148,8 @@ const Footer = () => (
       bottom: 0,
       left: 0,
       right: 0,
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      display: 'flex',
+      justifyContent: 'center',
       height: 64,
       paddingTop: 16,
       paddingLeft: 24,
@@ -78,16 +157,7 @@ const Footer = () => (
       paddingRight: 24,
     }}
   >
-    <div style={{ display: 'flex', alignItems: 'center' }}>social links</div>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-      }}
-    >
-      © 2018 Zachary Gibson. All rights reserved.
-    </div>
+    © 2018 Zachary Gibson. All rights reserved.
   </footer>
 )
 
@@ -132,7 +202,10 @@ class MainLink extends React.Component {
       gridRow,
       gridColumn,
       onMouseOver,
-      onMouseOut,
+      component,
+      width,
+      height,
+      linkEnabled,
     } = this.props
 
     return (
@@ -149,30 +222,59 @@ class MainLink extends React.Component {
             width: '100%',
             height: '100%',
             fontSize: 24,
-            textDecoration: 'underline',
           }}
         >
-          <Link
-            to={to}
-            innerRef={element => {
-              this.element = element
-            }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              paddingTop: 8,
-              paddingBottom: 8,
-              color: '#000',
-            }}
-            onMouseOver={({ target }) =>
-              onMouseOver(getX(target), getY(target), target)
-            }
-            onMouseOut={({ target }) =>
-              onMouseOut(getX(target), getY(target), target)
-            }
-          >
-            {children}
-          </Link>
+          {component && (
+            <Link
+              to={to}
+              innerRef={element => {
+                this.element = element
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingTop: 8,
+                paddingBottom: 8,
+                color: linkEnabled ? '#000' : '#C3C3C3',
+                textDecoration: linkEnabled ? 'underline' : 'line-through',
+              }}
+              onMouseOver={({ target }) =>
+                linkEnabled && onMouseOver(getX(target), getY(target), target)
+              }
+              // onMouseOut={({ target }) =>
+              //   onMouseOut(getX(target), getY(target), target)
+              // }
+            >
+              {children}
+            </Link>
+          )}
+          {!component && (
+            <a
+              href={to}
+              style={{
+                // position: 'relative',
+                // width: 32,
+                // height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                paddingTop: 8,
+                paddingBottom: 8,
+                // color: '#000',
+              }}
+            >
+              <img
+                src={children}
+                style={{
+                  // position: 'absolute',
+                  // top: '50%',
+                  // left: '50%',
+                  // transform: 'translate(-50%, -50%)',
+                  width,
+                  height,
+                }}
+              />
+            </a>
+          )}
         </div>
       </div>
     )
@@ -238,55 +340,57 @@ class Layout extends React.Component {
     const hoveredLink = `/${href.substring(indexOfLastSlash + 1)}`
 
     this.setState({ hoveredLink }, () => {
-      if (this.state.activePage !== this.state.hoveredLink) {
-        if (
-          this.state.activePage === homePage &&
-          homePage === this.state.hoveredLink
-        ) {
-          this.setState({
-            scale: 1.1,
-            top: 0,
-            left: 0,
-            isHovering: true,
-          })
-        } else {
-          this.setState({
-            scale: 0.4,
-            top: (top - initialCenterY) * 2.5,
-            left: (left - initialCenterX) * 2.5,
-            isHovering: true,
-          })
-        }
+      if (
+        this.state.activePage === homePage &&
+        homePage === this.state.hoveredLink
+      ) {
+        this.setState({
+          scale: 1,
+          top: 0,
+          left: 0,
+          isHovering: true,
+        })
+      } else if (homePage === this.state.hoveredLink) {
+        this.setState({
+          scale: 1,
+          top: 0,
+          left: 0,
+          isHovering: true,
+        })
+      } else {
+        this.setState({
+          scale: 0.4,
+          top: (top - initialCenterY) * 2.5,
+          left: (left - initialCenterX) * 2.5,
+          isHovering: true,
+        })
       }
     })
   }
 
   handleMouseOut = (left, top, target) => {
-    const { initialX, initialY } = this.state
-    const homePage = '/'
-    const href = target.href
-    const indexOfLastSlash = href.lastIndexOf('/')
-    const hoveredPath = `/${href.substring(indexOfLastSlash + 1)}`
-
-    if (this.state.activePage === homePage) {
-      this.setState({
-        scale: 1,
-        top: 0,
-        left: 0,
-        isHovering: false,
-      })
-
-      return
-    }
-
-    if (this.state.activePage !== hoveredPath) {
-      this.setState({
-        scale: 0.4,
-        left: initialX,
-        top: initialY,
-        isHovering: false,
-      })
-    }
+    // const { initialX, initialY } = this.state
+    // const homePage = '/'
+    // const href = target.href
+    // const indexOfLastSlash = href.lastIndexOf('/')
+    // const hoveredPath = `/${href.substring(indexOfLastSlash + 1)}`
+    // if (this.state.activePage === homePage) {
+    //   this.setState({
+    //     scale: 1,
+    //     top: 0,
+    //     left: 0,
+    //     isHovering: false,
+    //   })
+    //   return
+    // }
+    // if (this.state.activePage !== hoveredPath) {
+    //   this.setState({
+    //     scale: 0.4,
+    //     left: initialX,
+    //     top: initialY,
+    //     isHovering: false,
+    //   })
+    // }
   }
 
   // renderHoveredComponent = link => {
@@ -321,21 +425,25 @@ class Layout extends React.Component {
                 gridTemplateRows: '1fr auto',
                 gridTemplateColumns: '1fr 1.6fr 1fr',
                 height: '100vh',
+                overflowY: 'hidden',
               }}
             >
               <div
                 style={{
+                  height: '100vh',
                   position: 'relative',
                   zIndex: 1,
                   display: 'grid',
-                  gridTemplateRows: 'repeat(14, 1fr)',
-                  gridTemplateColumns: 'repeat(10, 1fr)',
+                  gridTemplateRows: 'repeat(20, 1fr)',
+                  gridTemplateColumns: 'repeat(14, 1fr)',
                 }}
               >
-                {links.slice(0, 3).map(link => (
+                {links.slice(0, 6).map(link => (
                   <MainLink
-                    key={link.title}
+                    // key={link.title}
                     to={link.to}
+                    width={link.width}
+                    height={link.height}
                     state={{ previousX: this.state.initialX }}
                     gridRow={link.gridRow}
                     gridColumn={link.gridColumn}
@@ -343,10 +451,11 @@ class Layout extends React.Component {
                     getInitialCoordinates={(x, y) => {
                       console.log(x, y)
                     }}
-                    onMouseOver={this.handleMouseOver}
-                    onMouseOut={this.handleMouseOut}
+                    onMouseOver={link.component && this.handleMouseOver}
+                    component={link.component}
+                    linkEnabled={link.linkEnabled}
                   >
-                    {link.title}
+                    {link.content}
                   </MainLink>
                 ))}
               </div>
@@ -379,9 +488,9 @@ class Layout extends React.Component {
                             pointerEvents: 'none',
                             position: 'absolute',
                             width: '50vw',
-                            maxWidth: 640,
+                            maxWidth: 540,
                             height: '50vw',
-                            maxHeight: 640,
+                            maxHeight: 540,
                             borderRadius: '50%',
                             backgroundColor: '#FF85E9',
                             ...props,
@@ -390,31 +499,30 @@ class Layout extends React.Component {
                       )}
                     </Spring>
                   )}
-                {this.state.isHovering && (
-                  <div style={{ position: 'relative' }}>
-                    {
-                      links.find(({ to }) => to === this.state.hoveredLink)
-                        .component
-                    }
-                  </div>
-                )}
-                {!this.state.isHovering && (
-                  <div style={{ position: 'relative' }}>{children}</div>
-                )}
+                {this.state.isHovering &&
+                  links.find(({ to }) => to === this.state.hoveredLink)
+                    .component}
+                {this.state.activePage &&
+                  !this.state.isHovering &&
+                  links.find(({ to }) => to === this.state.activePage)
+                    .component}
               </div>
               <div
                 style={{
+                  height: '100vh',
                   position: 'relative',
                   zIndex: 1,
                   display: 'grid',
-                  gridTemplateRows: 'repeat(14, 1fr)',
-                  gridTemplateColumns: 'repeat(10, 1fr)',
+                  gridTemplateRows: 'repeat(20, 1fr)',
+                  gridTemplateColumns: 'repeat(14, 1fr)',
                 }}
               >
-                {links.slice(3, 6).map(link => (
+                {links.slice(6, 13).map(link => (
                   <MainLink
-                    key={link.title}
+                    // key={link.title}
                     to={link.to}
+                    width={link.width}
+                    height={link.height}
                     gridRow={link.gridRow}
                     gridColumn={link.gridColumn}
                     onActivePageRecognition={this.setActivePageCoordinates}
@@ -422,9 +530,10 @@ class Layout extends React.Component {
                       console.log(x, y)
                     }}
                     onMouseOver={this.handleMouseOver}
-                    onMouseOut={this.handleMouseOut}
+                    component={link.component}
+                    linkEnabled={link.linkEnabled}
                   >
-                    {link.title}
+                    {link.content}
                   </MainLink>
                 ))}
               </div>
