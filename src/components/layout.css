@@ -219,6 +219,7 @@ html {
   box-sizing: inherit;
 }
 body {
+  background-color: #000;
   color: #000;
   font-family: 'MaisonNeueExtended';
   font-weight: normal;
@@ -631,4 +632,18 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+.player-wrapper {
+  position: relative;
+  top: 2%;
+  left: 18.75%;
+  /* transform: translateX(-25%); */
+  padding-top: 90%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
