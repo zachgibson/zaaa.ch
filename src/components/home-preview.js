@@ -18,7 +18,7 @@ class Home extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ playing: true })
-    }, 500)
+    }, 750)
   }
 
   render() {
@@ -40,7 +40,7 @@ class Home extends React.Component {
               src={handWithoutThumb}
               style={{
                 width: '100%',
-                maxWidth: 560,
+                maxWidth: 600,
                 pointerEvents: 'none',
                 position: 'absolute',
                 top: '58%',
@@ -52,7 +52,7 @@ class Home extends React.Component {
             <div
               style={{
                 width: '100%',
-                maxWidth: 560,
+                maxWidth: 600,
                 // pointerEvents: 'none',
                 position: 'relative',
                 position: 'relative',
@@ -68,7 +68,7 @@ class Home extends React.Component {
                 style={{
                   display: 'block',
                   width: '100%',
-                  maxWidth: 560,
+                  maxWidth: 600,
                   opacity: 0,
                   // backgroundColor: 'red',
                   // opacity: 0.5,
@@ -87,11 +87,12 @@ class Home extends React.Component {
                 <div className="player-wrapper">
                   <ReactPlayer
                     className="react-player"
+                    url={'https://streamable.com/rx1hg'}
                     url={video}
                     playing={this.state.playing}
                     // playing
                     muted
-                    width="auto"
+                    width="42%"
                     height="100%"
                     controls
                     // style={{ width: 'auto' }}
@@ -104,7 +105,7 @@ class Home extends React.Component {
               style={{
                 display: 'block',
                 width: '100%',
-                maxWidth: 560,
+                maxWidth: 600,
                 pointerEvents: 'none',
                 position: 'absolute',
                 top: '58%',
@@ -117,7 +118,7 @@ class Home extends React.Component {
               style={{
                 display: 'block',
                 width: '100%',
-                maxWidth: 560,
+                maxWidth: 600,
                 pointerEvents: 'none',
                 position: 'absolute',
                 top: '58%',
