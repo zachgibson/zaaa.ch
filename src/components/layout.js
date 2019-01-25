@@ -7,6 +7,8 @@ import TransitionLink, { TransitionState } from 'gatsby-plugin-transition-link'
 import './layout.css'
 import links from './links'
 
+const _window = typeof window !== 'undefined' && window
+
 const Footer = () => (
   <footer
     style={{
@@ -157,8 +159,8 @@ class MainLink extends React.Component {
   }
 }
 
-const initialCenterX = window.innerWidth / 2
-const initialCenterY = window.innerHeight / 2
+const initialCenterX = _window.innerWidth / 2
+const initialCenterY = _window.innerHeight / 2
 const homePage = '/'
 
 class Layout extends React.Component {
@@ -200,7 +202,7 @@ class Layout extends React.Component {
       pageScaleY: 1,
       pageBorderRadius: 0,
     })
-    this.setState({ activePage: window.location.pathname }, () => {
+    this.setState({ activePage: _window.location.pathname }, () => {
       if (this.state.activePage === homePage) {
         this.setState({
           scale: 1,
@@ -308,7 +310,7 @@ class Layout extends React.Component {
 
   render() {
     const { children } = this.props
-    const currentPathName = window.location.pathname
+    const currentPathName = _window.location.pathname
 
     return (
       <StaticQuery
