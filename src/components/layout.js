@@ -7,8 +7,6 @@ import TransitionLink, { TransitionState } from 'gatsby-plugin-transition-link'
 import './layout.css'
 import links from './links'
 
-const _window = typeof window !== 'undefined' && window
-
 const Footer = () => (
   <footer
     style={{
@@ -159,8 +157,6 @@ class MainLink extends React.Component {
   }
 }
 
-const initialCenterX = _window.innerWidth / 2
-const initialCenterY = _window.innerHeight / 2
 const homePage = '/'
 
 class Layout extends React.Component {
@@ -182,6 +178,7 @@ class Layout extends React.Component {
       pageBorderRadius: 50,
       previewPageOpacity: 0,
       hoveredLinkName: null,
+      window: null,
     }
   }
 
@@ -192,27 +189,35 @@ class Layout extends React.Component {
     //   this.setState({ previewPageOpacity: 0 })
     // }
 
-    this.setState({
-      scale: 0,
-      top: 0,
-      left: 0,
-      pageY: '0%',
-      pageRotateX: 0,
-      pageScaleX: 1,
-      pageScaleY: 1,
-      pageBorderRadius: 0,
-    })
-    this.setState({ activePage: _window.location.pathname }, () => {
-      if (this.state.activePage === homePage) {
-        this.setState({
-          scale: 1,
-          top: 0,
-          left: 0,
-          initialX: 0,
-          initialY: 0,
-        })
+    this.setState(
+      {
+        scale: 0,
+        top: 0,
+        left: 0,
+        pageY: '0%',
+        pageRotateX: 0,
+        pageScaleX: 1,
+        pageScaleY: 1,
+        pageBorderRadius: 0,
+        window,
+      },
+      () => {
+        this.setState(
+          { activePage: this.state.window.location.pathname },
+          () => {
+            if (this.state.activePage === homePage) {
+              this.setState({
+                scale: 1,
+                top: 0,
+                left: 0,
+                initialX: 0,
+                initialY: 0,
+              })
+            }
+          }
+        )
       }
-    })
+    )
   }
 
   setActivePageCoordinates = (x, y) => {
@@ -227,9 +232,9 @@ class Layout extends React.Component {
     } else {
       this.setState({
         scale: 0.4,
-        left: (x - initialCenterX) * 2.5,
+        left: (x - this.state.window.innerWidth / 2) * 2.5,
         top: (y - initialCenterY) * 2.5,
-        initialX: (x - initialCenterX) * 2.5,
+        initialX: (x - this.state.window.innerWidth / 2) * 2.5,
         initialY: (y - initialCenterY) * 2.5,
       })
     }
@@ -262,8 +267,8 @@ class Layout extends React.Component {
       } else {
         this.setState({
           scale: 0.4,
-          top: (top - initialCenterY) * 2.5,
-          left: (left - initialCenterX) * 2.5,
+          top: (top - this.state.window.innerHeight / 2) * 2.5,
+          left: (left - this.state.window.innerWidth / 2) * 2.5,
           isHovering: true,
         })
       }
@@ -310,7 +315,8 @@ class Layout extends React.Component {
 
   render() {
     const { children } = this.props
-    const currentPathName = _window.location.pathname
+    const { window } = this.state
+    const currentPathName = window && window.location.pathname
 
     return (
       <StaticQuery
