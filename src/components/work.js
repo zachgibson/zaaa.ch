@@ -11,8 +11,11 @@ import iPhoneXs from '../images/iPhone-Xs.png'
 import nikeParallaxCards from '../videos/nike-parallax-cards.mp4'
 import balllr from '../videos/balllr.mp4'
 import masterClass from '../videos/master-class.mp4'
+import masterClassImage from '../images/master-class.jpeg'
+import balllrImage from '../images/balllr.jpeg'
+import nikeParallaxCardsImage from '../images/nike-parallax-cards.jpeg'
 
-const IPhoneVideo = ({ src }) => (
+const IPhoneVideo = ({ src, posterImageSrc }) => (
   <TrackVisibility offset={638 / 2}>
     {({ isVisible }) => (
       <div style={{ position: 'relative' }}>
@@ -34,12 +37,19 @@ const IPhoneVideo = ({ src }) => (
             <ReactPlayer
               className="react-player"
               url={src}
-              // playing={isVisible}
+              playing={isVisible}
               muted
               loop
               width="auto"
               height="100%"
               controls
+              config={{
+                file: {
+                  attributes: {
+                    poster: posterImageSrc,
+                  },
+                },
+              }}
             />
           </div>
         </div>
@@ -112,7 +122,7 @@ const Work = () => (
         placeItems: 'center',
       }}
     >
-      <IPhoneVideo src={masterClass} />
+      <IPhoneVideo src={masterClass} posterImageSrc={masterClassImage} />
       <div style={{ maxWidth: 560 }}>
         <p style={{ fontSize: 22, lineHeight: 1.3 }}>
           This was a re-creation I did of the{' '}
@@ -128,7 +138,7 @@ const Work = () => (
         </a>
         <span style={{ marginLeft: 16, marginRight: 16 }}>&bull;</span>
         <a style={{ fontSize: 24, color: '#000' }} href="#">
-          Expo
+          Expo Snack
         </a>
         <span style={{ marginLeft: 16, marginRight: 16 }}>&bull;</span>
         <a style={{ fontSize: 24, color: '#000' }} href="#">
@@ -155,8 +165,11 @@ const Work = () => (
           Share on Twitter
         </a>
       </div>
-      <IPhoneVideo src={balllr} />
-      <IPhoneVideo src={nikeParallaxCards} />
+      <IPhoneVideo src={balllr} posterImageSrc={balllrImage} />
+      <IPhoneVideo
+        src={nikeParallaxCards}
+        posterImageSrc={nikeParallaxCardsImage}
+      />
       <div style={{ maxWidth: 560 }}>
         <p style={{ fontSize: 22, lineHeight: 1.3 }}>
           Lorem Khaled Ipsum is a major key to success. Watch your back, but
