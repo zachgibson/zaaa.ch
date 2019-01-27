@@ -233,9 +233,9 @@ class Layout extends React.Component {
       this.setState({
         scale: 0.4,
         left: (x - this.state.window.innerWidth / 2) * 2.5,
-        top: (y - initialCenterY) * 2.5,
+        top: (y - this.state.window.innerHeight / 2) * 2.5,
         initialX: (x - this.state.window.innerWidth / 2) * 2.5,
-        initialY: (y - initialCenterY) * 2.5,
+        initialY: (y - this.state.window.innerHeight / 2) * 2.5,
       })
     }
   }

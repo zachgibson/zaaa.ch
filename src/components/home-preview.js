@@ -5,7 +5,7 @@ import { Transition } from 'react-spring'
 import phone from '../images/phone.png'
 import thumb from '../images/thumb.png'
 import handWithoutThumb from '../images/hand-without-thumb.png'
-import video from '../videos/video.mp4'
+import video from '../videos/home-video.mp4'
 
 class Home extends React.Component {
   constructor(props) {
@@ -87,11 +87,10 @@ class Home extends React.Component {
                 <div className="player-wrapper">
                   <ReactPlayer
                     className="react-player"
-                    url={'https://streamable.com/rx1hg'}
                     url={video}
                     playing={this.state.playing}
                     // playing
-                    muted
+                    // muted
                     width="42%"
                     height="100%"
                     controls
